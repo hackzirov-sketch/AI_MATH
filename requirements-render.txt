@@ -46,7 +46,7 @@ apscheduler==3.10.4
 # RAG and scraping
 trafilatura==1.9.0
 beautifulsoup4==4.12.3
-lxml==5.2.1
+lxml>=4.9.4,<5.2.0
 readability-lxml==0.8.1
 wikipedia-api==0.6.0
 duckduckgo-search==5.3.1
