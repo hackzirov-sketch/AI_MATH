@@ -66,11 +66,21 @@ def _split_csv(raw_value: str | None) -> list[str]:
     return [item.strip() for item in str(raw_value).split(",") if item.strip()]
 
 
+def _unique_items(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for value in values:
+        if value in seen:
+            continue
+        seen.add(value)
+        result.append(value)
+    return result
+
+
 def _get_admin_ids() -> list[str]:
     env_ids = _split_csv(os.getenv("ADMIN_IDS", ""))
-    if env_ids:
-        return env_ids
-    return _split_csv(get_setting_value("admin_ids", ""))
+    db_ids = _split_csv(get_setting_value("admin_ids", ""))
+    return _unique_items(env_ids + db_ids)
 
 
 class IsAdmin(Filter):

@@ -2,7 +2,7 @@
 {% block content %}
 <section class="page-header">
     <h1>Sozlamalar va API kalitlar</h1>
-    <p>Bot token, kanal, ustoz ma'lumoti va AI xizmat kalitlarini bir joydan boshqaring.</p>
+    <p>Bot token, adminlar, kanal, ustoz ma'lumoti va AI xizmat kalitlarini bir joydan boshqaring.</p>
 </section>
 
 <div class="split">
@@ -87,6 +87,48 @@
     </div>
 
     <div class="card">
+        <h3>Admin boshqaruvi</h3>
+        <p class="card-subtle">
+            Telegram ID orqali yangi admin qo'shing. Bot admin tekshiruvi endi ENV va baza ro'yxatini birga ko'radi.
+        </p>
+        <form action="/settings/admin/add" method="POST">
+            <label for="admin_telegram_id">Yangi admin Telegram ID</label>
+            <input
+                id="admin_telegram_id"
+                type="text"
+                name="admin_telegram_id"
+                placeholder="Masalan: 7521446360"
+                required
+            />
+            <button class="btn btn-primary" type="submit">Admin qo'shish</button>
+        </form>
+
+        <div class="muted" style="margin-top: 16px; font-size: 14px; line-height: 1.6;">
+            <div>Faol adminlar soni: <strong>{{ effective_admin_count }}</strong></div>
+            <div>Bazadagi adminlar: <strong>{{ db_admin_ids|length }}</strong></div>
+            <div>ENV orqali adminlar: <strong>{{ env_admin_ids|length }}</strong></div>
+        </div>
+
+        {% if env_admin_ids %}
+        <div
+            style="
+                margin-top: 16px;
+                padding: 14px 16px;
+                border-radius: 16px;
+                background: #eff6ff;
+                border: 1px solid #bfdbfe;
+                color: #1d4ed8;
+                font-size: 14px;
+                line-height: 1.6;
+            "
+        >
+            `ADMIN_IDS` env ishlatilayotgan bo'lsa, u yerdagi adminlar doim faol bo'ladi.
+            Paneldan o'chirilsa ham, env ichida qolgan ID botda admin bo'lib turaveradi.
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="card">
         <h3>Yangi API kalit</h3>
         <p class="card-subtle">
             Bitta kalit limiti tugasa, tizim avtomatik ravishda keyingisiga o'tadi.
@@ -114,6 +156,133 @@
             <button class="btn btn-success" type="submit">Qo'shish</button>
         </form>
     </div>
+</div>
+
+<div class="card">
+    <h3>Joriy adminlar</h3>
+    <p class="card-subtle">Admin manbasi, tanilgan foydalanuvchi va olib tashlash boshqaruvi shu yerda.</p>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 180px;">Telegram ID</th>
+                <th>Foydalanuvchi</th>
+                <th style="width: 140px;">Manba</th>
+                <th style="width: 180px;">So'nggi faollik</th>
+                <th style="width: 180px;">Boshqaruv</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for admin in admin_rows %}
+            <tr>
+                <td><strong>{{ admin.telegram_id }}</strong></td>
+                <td>
+                    {% if admin.username %}
+                    <div><strong>@{{ admin.username }}</strong></div>
+                    {% else %}
+                    <div class="muted">Username topilmadi</div>
+                    {% endif %}
+                    {% if admin.display_name %}
+                    <div class="muted" style="margin-top: 6px;">{{ admin.display_name }}</div>
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="badge" style="background: #e0f2fe; color: #075985;">
+                        {{ admin.source_label }}
+                    </span>
+                </td>
+                <td class="muted">
+                    {{ admin.last_activity.strftime('%Y-%m-%d %H:%M') if admin.last_activity else "Faollik topilmadi" }}
+                </td>
+                <td>
+                    {% if admin.can_remove %}
+                    <form
+                        action="/settings/admin/remove/{{ admin.telegram_id }}"
+                        method="POST"
+                        style="display: inline"
+                        onsubmit="return confirm('Adminni ro\\'yxatdan olib tashlashni tasdiqlaysizmi?');"
+                    >
+                        <button type="submit" class="btn btn-danger" style="min-height: 38px; padding: 0 14px;">
+                            {{ "DB dan olish" if admin.remove_keeps_env_access else "O'chirish" }}
+                        </button>
+                    </form>
+                    {% if admin.remove_keeps_env_access %}
+                    <div class="muted" style="font-size: 12px; margin-top: 8px;">
+                        ENV sabab baribir admin bo'lib qoladi.
+                    </div>
+                    {% endif %}
+                    {% else %}
+                    <span class="badge" style="background: #e2e8f0; color: #334155;">Faqat ENV</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 26px;" class="muted">
+                    Hozircha admin ro'yxati bo'sh.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="card">
+    <h3>So'nggi foydalanuvchilar</h3>
+    <p class="card-subtle">Bazadagi foydalanuvchini bir bosishda admin qilib tayinlash mumkin.</p>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 180px;">Telegram ID</th>
+                <th>Foydalanuvchi</th>
+                <th style="width: 120px;">Ball</th>
+                <th style="width: 180px;">So'nggi faollik</th>
+                <th style="width: 180px;">Holat</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in recent_users %}
+            <tr>
+                <td><strong>{{ user.telegram_id }}</strong></td>
+                <td>
+                    {% if user.username %}
+                    <div><strong>@{{ user.username }}</strong></div>
+                    {% else %}
+                    <div class="muted">Username yo'q</div>
+                    {% endif %}
+                    {% if user.display_name %}
+                    <div class="muted" style="margin-top: 6px;">{{ user.display_name }}</div>
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="badge" style="background: #eef2ff; color: #3730a3;">
+                        {{ user.score }} ball
+                    </span>
+                </td>
+                <td class="muted">
+                    {{ user.last_activity.strftime('%Y-%m-%d %H:%M') if user.last_activity else "Faollik yo'q" }}
+                </td>
+                <td>
+                    {% if user.is_admin %}
+                    <span class="badge active">Admin</span>
+                    {% else %}
+                    <form action="/settings/admin/add" method="POST" style="display: inline">
+                        <input type="hidden" name="admin_telegram_id" value="{{ user.telegram_id }}" />
+                        <button type="submit" class="btn btn-success" style="min-height: 38px; padding: 0 14px;">
+                            Admin qilish
+                        </button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 26px;" class="muted">
+                    Foydalanuvchilar hali bazaga tushmagan.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 <div class="card">
