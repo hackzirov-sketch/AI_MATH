@@ -1,0 +1,150 @@
+15 Ko'rsatkichli tenglama vatengsizliklar
+
+244
+
+1. Ko'rsatkichli tenglamalar......................................................................................................................................... 244
+
+2. Ko'rsatkichli tengsizliklar......................................................................................................................................... 250
+
+16 Logarifmlar
+
+254
+
+1. Logarifmik hisoblashlar va shakl almashtirishlar............................................................................................... 254
+
+2. Logarifmik funksiyalar............................................................................................................................................... 262
+
+3. Logarifmik tenglamalar............................................................................................................................................... 264
+
+4. Logarifmik tengsizliklar............................................................................................................................................... 270
+
+17 Trigonometriya
+
+274
+
+1. Asosiy tushunchalar..................................................................................................................................................... 274
+
+2. Asosiy trigonometrik ayniyatlar............................................................................................................................. 278
+
+3. Keltirish formulalari..................................................................................................................................................... 282 4. Qo'shish formulalari..................................................................................................................................................... 286
+
+5. Ikkilangan burchak formulalari................................................................................................................................... 290
+
+6. Geometrik masalalar..................................................................................................................................................... 296
+
+7. Ko'paytma va yig'indi uchunformulalar...................................................................................................................302
+
+8. Yarim burchak formulalari......................................................................................................................................... 306 9. Trigonometrik funksiyalar......................................................................................................................................... 308
+
+10. Teskari trigonometrik funksiyalar.............................................................................................................................314
+
+11. Trigonometrik tenglamalar.........................................................................................................................................318 12. Trigonometrik tengsizliklar.........................................................................................................................................326
+
+18 Hosila
+
+330
+
+1. Hosila olish qoidalari.....................................................................................................................................................330
+
+2. Murakkab funksiya hosilasi......................................................................................................................................... 336
+
+3. Funksiyani tekshirish..................................................................................................................................................... 340
+
+4. Hosilaning geometrik va mexanik ma'nosi........................................................................................................... 344
+
+19 Integral
+
+348
+
+1. Integral(l-qism)...........................................................................................................................................................348
+
+2. Integral(2-qism)...........................................................................................................................................................352
+
+3. Aniq integral.................................................................................................................................................................358
+
+4. Egri chiziqli trapetsiya yuzi......................................................................................................................................... 362
+
+20 Kombinatorika. Ehtimollarnazariyasi. To'plam
+
+366
+
+1. Kombinatorika.................................................................................................................................................................366
+
+2. Ehtimollar nazariyasi..................................................................................................................................................... 372
+
+3. To'plamlar....................................................................................................................................................................... 374
+
+Javoblar
+
+376
+
+Ushbu to'plam Intellegence Development Center(t.me/idcuz) tomonidan tayyorlangan. IDC tashkilotining asosiy faoliyati davlat va nodavlat ta'lim muassasalari uchun o'quv qo'llanmalar, dasturlar va kitoblar tayyorlash hisoblanadi. Buyurtma berish uchun quyidagilarga murojaat qiling:
+^^@idcmarketbot (99) 968 44 00
+^^@ IDC_books
+
+Ushbu testlar to'plami algebra kursini qamrab olgan bo'lib, 20 ta bo'lim, 72 ta mavzu, 185 ta variant, 2700 ta testdan iborat. Mavzulardagi testlar qiyinchilik darajasiga qarab tartiblangan. Ushbu testlar to'plami maktab o'quvchilari, abituriyentlar, o'qituvchilar, attestatsiya, milliy va xalqaro sertifikatlarga tayyorlanuvchilarga mo'ljallangan. Ushbu kitobni tuzishda yaqindan yordam bergan A. Yo'ldoshboyev, M. Suyunqulova, O. Hodiyev, Sh. Bobomurodovlarga o'z minnatdorchiligimizni bildiramiz.
+
+Natural sonlar
+
+1. Natural sonlar va ular ustida amallar
+
+[~1~[ Hisoblang: 32 -- 24 : 8 · 3 A)3 B)23 C)31
+
+D)32
+
+[~6~] 43 < n < 92 tengsizlikni nechta natural son
+
+q
+
+li?
+
+", !; C)50 D)51
+
+|~2~| Hisoblang: 48 -- 32 : (6 · 4 -- 11 · 2) A)8 B)24 C)32 D)47
+
+[~7~| 12 va 16 sonlarining ko'paytmasiga teng bo'lishi uchun 200 sonidan qanday sonni ayirish kerak? A)6 B)8 C)10 D)12
+
+[5] Hisoblang: 54 · 3' 6-37 + 54-24 + 46 · 24 A)3700 B)4t ' C)5400 D)6100
+
+|~8~[ 24 + 24 + ... + 24 = 1200 yig'indida n ta 24 n
+qatnashayotgan bo'lsa, n ning qiymatini toping. A)40 B)45 C)50 D)60
+
+[<[ Hisoblang: 38 · 19 -- 30 · 19 -- 8 · 13 A)48 B)64 C)68 D)128
+
+Turli raqamli eng kichik 4 xonali sonning raqamlar yig'indisini toping. A)5 B)6 C)9 D)10
+
+[B] Anvar kuniga 120 betdan o'qib, kitobni 8 kunda o'qib tugatadi. Agar Akbar bu kitobni 6 kunda o'qib tugatishni xohlasa, kuniga necha betdan o'qishi kerak? A)140 B)150 C)160 D)180
+
+Ko'paytmada 3 ta natural son qatnashmoqda. Agar birinchi va ikkinchi ko'paytuvchi 6 martadan orttirilib, uchinchi ko'paytuvchi 3 marta kamaytirilsa ko'paytma qanday o'zgaradi? A)4 marta ortadi B)9 marta ortadi C)12 marta ortadi D)18 marta ortadi
+
+4
+
+1. NATURAL SONLAR VA ULAR USTIDA AMALLAR
+
+1-test
+
+g|g%| 9582436 sonidan 3 ta raqam shunday o'chirildiki, natijada eng katta son hosil bo'ldi. O'chirilgan raqamlar yig'indisini toping. A)9 B)10 C)12 D)16
+
+[15] a, b va c bir-biridan farqli raqamlar uchun a+b+c ning eng katta qiymatini toping. A)ll B)24 C)27 D)30
+
+O'n bir million o'n besh ming yigirma sonining o'nli yozuvida nechta 0 raqami ishtirok etadi? A)2 B)3 C)4 D)5
+
+QlF] 2,7,8 raqamlari yordamida, ularni takrorlamasdan nechta turli ikki xonali son yozish mumkin? A)3 B)4 C)6 D)9
+
+a va b raqamlar uchun a 4- b = 11 bo'lsa, a · b ning eng katta qiymatini toping. A)10 B)18 C)28 D)30
+
+DuT| 3 kg mevaning narxi 24 000 so'm bo'lsa, 8 kg mevaning narxi qancha bo'ladi? A)48 000 B)64 000 C)72 000 D)80 000
+
+[14] a, b natural sonlar uchun ab = 15 va bc = 21 bo'lsa, a + b 4- c ning eng kichik qiymatini toping. A)14 B)15 C)18 D)37
+
+|jST] Bitta qopga 40 kg kartoshka sig'adi. 290 kg kartoshka uchun eng kamida nechta qop ishlatish kerak? A)6 B)7 C)8 D)9
+
+3 va 7 raqamlaridan foydalanib yozilgan barcha ikki xonali sonlar yig'indisini toping. A)106 B)110 C)114 D)220
+
+i6~| 40 soni dastlab 5 marta orttirildi. Keyin esa 80 ga orttirildi. Hosil bo`lgan son dastlabkisidan necha marta ortiq? A)5 B)7 C)200 D)400
+
+©Intelligence Development Center(t.me/idcuz)
+
+5
+
+

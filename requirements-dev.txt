@@ -1,0 +1,24 @@
+-r requirements-render.txt
+
+# Testing
+pytest==8.2.1
+pytest-asyncio==0.23.7
+hypothesis==6.103.0
+pytest-benchmark==4.0.0
+faker==25.0.0
+coverage==7.5.1
+
+# Data and analytics
+pandas==2.2.2
+scipy==1.13.0
+joblib==1.4.2
+
+# Dev tools
+ruff==0.4.5
+black==24.4.2
+mypy==1.10.0
+pre-commit==3.7.1
+
+# Type support
+types-redis
+types-requests

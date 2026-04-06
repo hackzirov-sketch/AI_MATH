@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="page-header">
+        <h1>Boshqaruv paneli</h1>
+        <p>Botning umumiy holati, loglar va tezkor ishga tushirish tugmalarini shu yerda ko'rasiz.</p>
+    </section>
+
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <h3 style="margin-bottom: 8px;">Bot holati</h3>
+                <p class="card-subtle">Asosiy ko'rsatkichlar va qo'lda ishga tushirish nazorati.</p>
+            </div>
+            <a href="/manual_trigger" class="btn btn-success">⚡ Test xabar yuborish</a>
+        </div>
+
+        <div class="stats-grid" style="margin-top: 18px;">
+            <div class="stat-tile">
+                <span class="stat-kicker">Quizlar</span>
+                <div class="stat-value">{{ total_quizzes }}</div>
+                <div class="stat-note">Bazada saqlangan jami quizlar soni.</div>
+            </div>
+            <div class="stat-tile">
+                <span class="stat-kicker">Loglar</span>
+                <div class="stat-value">{{ logs|length }}</div>
+                <div class="stat-note">So'nggi yozuvlar soni, monitoring uchun qulay.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>So'nggi faollik</h3>
+        <p class="card-subtle">Tizim loglari orqali bot faoliyati va xatolarni kuzating.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 18%;">Sana</th>
+                    <th style="width: 12%;">Daraja</th>
+                    <th style="width: 16%;">Modul</th>
+                    <th>Xabar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td class="muted">{{ log.created_at.strftime('%Y-%m-%d %H:%M') if log.created_at else '' }}</td>
+                    <td>
+                        {% if log.level == 'ERROR' %}
+                            <span class="badge inactive">Xato</span>
+                        {% elif log.level == 'WARNING' %}
+                            <span class="badge" style="background:#fef3c7; color:#92400e;">Ogohlantirish</span>
+                        {% else %}
+                            <span class="badge" style="background:#dbeafe; color:#1d4ed8;">Info</span>
+                        {% endif %}
+                    </td>
+                    <td><strong>{{ log.module }}</strong></td>
+                    <td>{{ log.message }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 28px;" class="muted">
+                        Hozircha loglar yo'q. Bot ishga tushgach yoki amal bajarilgach shu yerda ko'rinadi.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

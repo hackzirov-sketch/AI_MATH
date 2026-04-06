@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <h1>Sozlamalar va API kalitlar</h1>
+    <p>Bot token, kanal, ustoz ma'lumoti va AI xizmat kalitlarini bir joydan boshqaring.</p>
+</section>
+
+<div class="split">
+    <div class="card">
+        <h3>Bot parametrlari</h3>
+        <p class="card-subtle">Asosiy ulanish va automation sozlamalari shu yerda saqlanadi.</p>
+        <form action="/settings/save" method="POST">
+            <label for="bot_token">Telegram Bot Token</label>
+            <input
+                id="bot_token"
+                type="text"
+                name="bot_token"
+                value="{{ bot_token }}"
+                placeholder="1234567890:AAF..."
+            />
+
+            <label for="channel_id">Kanal nomi yoki ID</label>
+            <input
+                id="channel_id"
+                type="text"
+                name="channel_id"
+                value="{{ channel_id }}"
+                placeholder="@kanal_nomi yoki -1001234..."
+            />
+
+            <label for="teacher_username">O'qituvchi username yoki ID</label>
+            <input
+                id="teacher_username"
+                type="text"
+                name="teacher_username"
+                value="{{ teacher_username }}"
+                placeholder="@ustoz_username yoki 123456789"
+            />
+
+            <label for="age_poll_wait_minutes">Qiyinlik poll kutish vaqti (daq)</label>
+            <input
+                id="age_poll_wait_minutes"
+                type="text"
+                name="age_poll_wait_minutes"
+                value="{{ age_poll_wait_minutes }}"
+                placeholder="3"
+            />
+
+            <label for="type_poll_wait_minutes">Fan poll kutish vaqti (daq)</label>
+            <input
+                id="type_poll_wait_minutes"
+                type="text"
+                name="type_poll_wait_minutes"
+                value="{{ type_poll_wait_minutes }}"
+                placeholder="3"
+            />
+
+            <label for="cycle_idle_hours">Sikllar oralig'i (soat)</label>
+            <input
+                id="cycle_idle_hours"
+                type="text"
+                name="cycle_idle_hours"
+                value="{{ cycle_idle_hours }}"
+                placeholder="6"
+            />
+
+            <label for="quiz_batch_count">Bir siklda quiz soni</label>
+            <input
+                id="quiz_batch_count"
+                type="text"
+                name="quiz_batch_count"
+                value="{{ quiz_batch_count }}"
+                placeholder="10"
+            />
+
+            <label for="quiz_duration_minutes">Har bir quiz davomiyligi (daq)</label>
+            <input
+                id="quiz_duration_minutes"
+                type="text"
+                name="quiz_duration_minutes"
+                value="{{ quiz_duration_minutes }}"
+                placeholder="30"
+            />
+
+            <button class="btn btn-primary" type="submit">Saqlash</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>Yangi API kalit</h3>
+        <p class="card-subtle">
+            Bitta kalit limiti tugasa, tizim avtomatik ravishda keyingisiga o'tadi.
+            Bir nechta xizmatlarni birga ishlatish mumkin.
+        </p>
+        <form action="/add_key" method="POST">
+            <label for="service">Xizmat</label>
+            <select id="service" name="service">
+                <option value="groq">Groq</option>
+                <option value="openrouter">OpenRouter</option>
+                <option value="cerebras">Cerebras</option>
+                <option value="sambanova">SambaNova</option>
+                <option value="huggingface">HuggingFace Serverless API</option>
+            </select>
+
+            <label for="api_key">API kalit</label>
+            <input
+                id="api_key"
+                type="text"
+                name="api_key"
+                placeholder="API kalitni kiriting..."
+                required
+            />
+
+            <button class="btn btn-success" type="submit">Qo'shish</button>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Mavjud API kalitlar</h3>
+    <p class="card-subtle">Faol holat, ishlatilish soni va boshqaruv tugmalari shu jadvalda.</p>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 56px;">ID</th>
+                <th style="width: 140px;">Xizmat</th>
+                <th>Kalit</th>
+                <th style="width: 150px;">Ishlatildi</th>
+                <th style="width: 150px;">Holat</th>
+                <th style="width: 190px;">Boshqaruv</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k in api_keys %}
+            <tr>
+                <td><strong>#{{ k.id }}</strong></td>
+                <td>
+                    {% if k.service == 'groq' %}
+                    <span class="badge" style="background: #dcfce7; color: #166534;">Groq</span>
+                    {% elif k.service == 'openrouter' %}
+                    <span class="badge" style="background: #dbeafe; color: #1d4ed8;">OpenRouter</span>
+                    {% elif k.service == 'cerebras' %}
+                    <span class="badge" style="background: #f3e8ff; color: #7e22ce;">Cerebras</span>
+                    {% elif k.service == 'sambanova' %}
+                    <span class="badge" style="background: #ffedd5; color: #c2410c;">SambaNova</span>
+                    {% elif k.service == 'huggingface' %}
+                    <span class="badge" style="background: #fef3c7; color: #92400e;">HuggingFace</span>
+                    {% else %}
+                    <span class="badge" style="background: #e2e8f0; color: #334155;">{{ k.service }}</span>
+                    {% endif %}
+                </td>
+                <td style="font-family: Consolas, monospace; color: #475569;">
+                    {{ k.api_key[:8] }}.....{{ k.api_key[-5:] }}
+                </td>
+                <td>
+                    <span class="badge" style="background: #eef2ff; color: #3730a3;">
+                        {{ k.usage_count }} marta
+                    </span>
+                    {% if k.last_used %}
+                    <div class="muted" style="font-size: 12px; margin-top: 6px;">
+                        {{ k.last_used.strftime('%Y-%m-%d %H:%M') if k.last_used else '' }}
+                    </div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if k.is_active %}
+                    <span class="badge active">Yoniq</span>
+                    {% else %}
+                    <span class="badge inactive">O'chiq</span>
+                    {% if k.last_error %}
+                    <div class="muted" style="font-size: 12px; margin-top: 6px; color: #b42318;" title="{{ k.last_error }}">
+                        {{ k.last_error[:40] }}...
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                </td>
+                <td style="white-space: nowrap;">
+                    <a
+                        href="/toggle_key/{{ k.id }}"
+                        class="btn {% if k.is_active %}btn-danger{% else %}btn-success{% endif %}"
+                        style="min-height: 38px; padding: 0 14px; margin-right: 6px;"
+                    >
+                        {{ "O'chirish" if k.is_active else "Yoqish" }}
+                    </a>
+                    <form
+                        action="/delete_key/{{ k.id }}"
+                        method="POST"
+                        style="display: inline"
+                        onsubmit="return confirm('Kalitni butunlay o\\'chirishni tasdiqlaysizmi?');"
+                    >
+                        <button
+                            type="submit"
+                            class="btn btn-danger"
+                            style="min-height: 38px; padding: 0 14px; background: linear-gradient(135deg, #7f1d1d, #b42318);"
+                        >
+                            O'chirish
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 26px;" class="muted">
+                    Hozircha API kalit qo'shilmagan.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

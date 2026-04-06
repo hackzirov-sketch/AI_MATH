@@ -1,0 +1,57 @@
+[
+  {
+    "id": "idc_test_kitob",
+    "title": "IDC Test Kitob",
+    "subject": "algebra",
+    "aliases": ["algebra", "matematika"],
+    "path": "C:\\Users\\hackz\\Downloads\\822335240-Test-Kitob-Idc.pdf",
+    "parse_mode": "split_answer_key",
+    "source_kind": "test_book",
+    "priority": 90,
+    "enabled": true
+  },
+  {
+    "id": "idc_geometriya_2",
+    "title": "IDC Geometriya 2",
+    "subject": "geometriya",
+    "aliases": ["geometriya", "matematika"],
+    "path": "C:\\Users\\hackz\\Downloads\\791367032-IDC-Geometriya-2.pdf",
+    "parse_mode": "split_answer_key",
+    "source_kind": "reference_book",
+    "priority": 30,
+    "enabled": true
+  },
+  {
+    "id": "abituriyent_1_9",
+    "title": "Abituriyent 1-9",
+    "subject": "matematika",
+    "aliases": ["matematika", "algebra", "geometriya"],
+    "path": "C:\\Users\\hackz\\Downloads\\678655489-Abituriyent-1-9.pdf",
+    "parse_mode": "split_answer_key",
+    "source_kind": "reference_book",
+    "priority": 35,
+    "enabled": true
+  },
+  {
+    "id": "oq_toplam_1996_2007",
+    "title": "Oq To'plam 1996-2007",
+    "subject": "matematika",
+    "aliases": ["matematika", "algebra", "geometriya"],
+    "path": "C:\\Users\\hackz\\Downloads\\Telegram Desktop\\Oq toplam 1996-2007.pdf",
+    "parse_mode": "solved_test_book",
+    "source_kind": "test_book",
+    "priority": 100,
+    "enabled": true
+  },
+  {
+    "id": "ehtimollar_nazaryasi",
+    "title": "Ehtimollar nazaryasi",
+    "subject": "ehtimollik",
+    "aliases": ["ehtimollik", "matematika", "kombinatorika", "statistika"],
+    "path": "C:\\Users\\hackz\\Downloads\\Telegram Desktop\\Ehtimollar nazaryasi.pdf",
+    "parse_mode": "solved_text_problems",
+    "source_kind": "problem_book",
+    "priority": 70,
+    "enabled": true
+  }
+]

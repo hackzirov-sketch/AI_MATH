@@ -1,0 +1,174 @@
+services:
+  - type: web
+    name: ai-math-web
+    runtime: python
+    region: frankfurt
+    plan: starter
+    buildCommand: pip install -r requirements-render.txt
+    preDeployCommand: python render_manage.py init-db
+    startCommand: gunicorn render_web:app --bind 0.0.0.0:$PORT --workers 2 --timeout 180
+    healthCheckPath: /health
+    envVars:
+      - fromGroup: ai-math-common
+      - key: RENDER_ROLE
+        value: web
+      - key: FLASK_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-math-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: ai-math-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: keyvalue
+          name: ai-math-redis
+          property: connectionString
+      - key: BOT_TOKEN
+        sync: false
+      - key: SERPER_API_KEY
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+
+  - type: worker
+    name: ai-math-bot
+    runtime: python
+    region: frankfurt
+    plan: starter
+    buildCommand: pip install -r requirements-render.txt
+    preDeployCommand: python render_manage.py init-db
+    startCommand: python render_bot.py
+    envVars:
+      - fromGroup: ai-math-common
+      - key: RENDER_ROLE
+        value: bot
+      - key: RUN_MODE
+        value: bot
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-math-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: ai-math-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: keyvalue
+          name: ai-math-redis
+          property: connectionString
+      - key: BOT_TOKEN
+        sync: false
+      - key: SERPER_API_KEY
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+
+  - type: worker
+    name: ai-math-celery
+    runtime: python
+    region: frankfurt
+    plan: starter
+    buildCommand: pip install -r requirements-render.txt
+    preDeployCommand: python render_manage.py init-db
+    startCommand: celery -A services.celery_app.celery_app worker -l info --concurrency=1 --prefetch-multiplier=1
+    envVars:
+      - fromGroup: ai-math-common
+      - key: RENDER_ROLE
+        value: celery-worker
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-math-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: ai-math-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: keyvalue
+          name: ai-math-redis
+          property: connectionString
+      - key: BOT_TOKEN
+        sync: false
+      - key: SERPER_API_KEY
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+
+  - type: worker
+    name: ai-math-beat
+    runtime: python
+    region: frankfurt
+    plan: starter
+    buildCommand: pip install -r requirements-render.txt
+    preDeployCommand: python render_manage.py init-db
+    startCommand: celery -A services.celery_app.celery_app beat -l info
+    envVars:
+      - fromGroup: ai-math-common
+      - key: RENDER_ROLE
+        value: celery-beat
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-math-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: ai-math-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: keyvalue
+          name: ai-math-redis
+          property: connectionString
+      - key: BOT_TOKEN
+        sync: false
+      - key: SERPER_API_KEY
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+
+  - type: keyvalue
+    name: ai-math-redis
+    region: frankfurt
+    plan: starter
+    ipAllowList: []
+    maxmemoryPolicy: allkeys-lru
+
+databases:
+  - name: ai-math-db
+    region: frankfurt
+    plan: basic-256mb
+    databaseName: ai_math
+    user: ai_math
+    ipAllowList: []
+
+envVarGroups:
+  - name: ai-math-common
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: ENVIRONMENT
+        value: production
+      - key: APP_TIMEZONE
+        value: Asia/Tashkent
+      - key: CACHE_CLEAN_INTERVAL_SECONDS
+        value: "600"
+      - key: DAILY_CONTENT_HOUR
+        value: "9"
+      - key: DAILY_CONTENT_MINUTE
+        value: "0"
+      - key: AI_MATH_RENDER_MAX_WORKERS
+        value: "2"
+      - key: AI_MATH_RENDER_SOFT_LIMIT_MB
+        value: "192"
+      - key: AI_MATH_RENDER_HARD_LIMIT_MB
+        value: "256"

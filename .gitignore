@@ -1,0 +1,62 @@
+# ── Ma'lumotlar bazasi ─────────────────────────────────────────────
+database.db
+database.db-shm
+database.db-wal
+*.db
+*.sqlite
+*.sqlite3
+
+# ── Muhit o'zgaruvchilari (MAXFIY!) ───────────────────────────────
+.env
+.env.local
+.env.production
+
+# ── Vaqtinchalik media fayllar ─────────────────────────────────────
+temp_images/
+temp_videos/
+data/cache/
+
+# ── Python cache ───────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+
+# ── Virtual muhit ──────────────────────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+.env/
+
+# ── IDE fayllar ────────────────────────────────────────────────────
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Build / dist ───────────────────────────────────────────────────
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ── Pytest / Coverage ──────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# ── Alembic versiyalar (DB ga bog'liq, local da qayta yaratiladi) ──
+# alembic/versions/*.py   ← Buni kommentdan chiqarmang!
+
+# ── Logs ───────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Manim render chiqindilar ───────────────────────────────────────
+media/
