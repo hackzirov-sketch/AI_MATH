@@ -8,6 +8,7 @@ database.db-wal
 
 # ── Muhit o'zgaruvchilari (MAXFIY!) ───────────────────────────────
 .env
+.env_render
 .env.local
 .env.production
 

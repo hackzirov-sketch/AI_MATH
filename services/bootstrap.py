@@ -19,6 +19,11 @@ _runtime_bootstrapped = False
 _state_bootstrapped = False
 
 
+def _load_env_files() -> None:
+    load_dotenv(dotenv_path=BASE_DIR / ".env", override=False)
+    load_dotenv(dotenv_path=BASE_DIR / ".env_render", override=False)
+
+
 def bootstrap_runtime() -> None:
     global _runtime_bootstrapped
     if _runtime_bootstrapped:
@@ -41,7 +46,7 @@ def bootstrap_runtime() -> None:
     )
 
     configure_async_runtime()
-    load_dotenv()
+    _load_env_files()
     configure_observability(logging.INFO)
     _configure_sentry()
     _runtime_bootstrapped = True
@@ -54,8 +59,10 @@ def bootstrap_state() -> None:
 
     from database.models import init_db
     from services.cache_manager import cache_manager
+    from services.startup_defaults import sync_startup_defaults
 
     init_db()
+    sync_startup_defaults()
     cache_manager.ensure_directories()
     _state_bootstrapped = True
 
