@@ -7,6 +7,9 @@ class KnowledgeRetrieverTests(unittest.TestCase):
     def setUp(self):
         self.retriever = KnowledgeRetriever()
 
+    def test_pipeline_is_lazy_before_retrieve(self):
+        self.assertIsNone(self.retriever._pipeline)
+
     def test_clean_html_content_removes_noise(self):
         html = """
         <html>

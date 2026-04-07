@@ -19,7 +19,6 @@ except Exception:
 import requests
 
 from database.models import DailyMathContent, get_session
-from services.knowledge_retriever import knowledge_retriever
 from services.key_manager import execute_with_rotation
 from services.settings_store import get_setting_int, get_setting_value
 
@@ -138,6 +137,16 @@ FALLBACK_LONG_FACTS = [
     },
 ]
 _daily_send_lock = asyncio.Lock()
+
+
+class _LazyKnowledgeRetriever:
+    def retrieve(self, *args, **kwargs):
+        from services.knowledge_retriever import knowledge_retriever as _knowledge_retriever
+
+        return _knowledge_retriever.retrieve(*args, **kwargs)
+
+
+knowledge_retriever = _LazyKnowledgeRetriever()
 
 
 @dataclass

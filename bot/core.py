@@ -63,7 +63,6 @@ def setup_bot():
     from .handlers.custom_quiz import custom_quiz_router
     from .handlers.user import user_router
     from .handlers.test_generator import test_router
-    from services.daily_math_content import run_daily_scheduled_task
 
     dp.include_router(test_router)
     dp.include_router(custom_quiz_router)
@@ -77,6 +76,12 @@ def setup_bot():
         import asyncio
 
         asyncio.create_task(automation_background_task(bot))
-        asyncio.create_task(run_daily_scheduled_task(bot))
+        asyncio.create_task(_run_daily_scheduled_task(bot))
 
     return bot, dp
+
+
+async def _run_daily_scheduled_task(bot):
+    from services.daily_math_content import run_daily_scheduled_task
+
+    await run_daily_scheduled_task(bot)

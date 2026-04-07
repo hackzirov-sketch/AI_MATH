@@ -18,8 +18,6 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import Message
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
-from services.test_builder import TestBuilder, TestRequest, test_builder
-
 test_router = Router()
 
 BTN_CANCEL = "Bekor qilish"
@@ -27,6 +25,12 @@ BTN_SKIP = "O'tkazib yuborish"
 BTN_SUGGEST = "Mavzu tavsiya qilish"
 
 DIFFICULTIES = ["oson", "o'rta", "qiyin"]
+
+
+def _get_test_builder_components():
+    from services.test_builder import TestRequest, test_builder
+
+    return TestRequest, test_builder
 
 
 class TestGeneratorStates(StatesGroup):
@@ -174,7 +178,8 @@ async def process_subject(message: Message, state: FSMContext):
         return
     
     await state.update_data(subject=subject)
-    
+
+    _, test_builder = _get_test_builder_components()
     topics = test_builder.suggest_topics(subject)
     topics_text = ", ".join(topics[:8]) if topics else "avtomatik tanlanadi"
     
@@ -224,7 +229,8 @@ async def _generate_test(message: Message, state: FSMContext, data: dict):
     difficulty = data['difficulty']
     count = data['count']
     subject = data['subject']
-    
+
+    TestRequest, test_builder = _get_test_builder_components()
     request = TestRequest(
         grade=data['grade'],
         difficulty=data['difficulty'],

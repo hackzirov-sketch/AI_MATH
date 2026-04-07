@@ -26,7 +26,6 @@ from database.models import (
     get_session,
 )
 from services.settings_store import get_setting_int, get_setting_value
-from services.daily_math_content import run_daily_scheduled_task
 
 automation_router = Router()
 logger = logging.getLogger(__name__)
